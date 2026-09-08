@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felipe Lopes — Analytics Engineer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg: #12151A;
+  --panel: #1A1F27;
+  --panel-2: #202733;
+  --text: #E8EAED;
+  --muted: #8891A0;
+  --bronze: #B5793A;
+  --silver: #9AA7B5;
+  --gold: #D9A727;
+  --rule: rgba(255,255,255,0.09);
+  --maxw: 980px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter', sans-serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+.mono{font-family:'IBM Plex Mono', monospace;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+
+/* NAV */
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(18,21,26,0.85); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+nav .wrap{display:flex; justify-content:space-between; align-items:center; height:64px;}
+.nav-name{font-family:'Space Grotesk'; font-weight:600; font-size:16px;}
+.nav-links{display:flex; gap:28px; list-style:none;}
+.nav-links a{color:var(--muted); text-decoration:none; font-size:14px; transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+@media(max-width:640px){.nav-links{display:none;}}
+
+/* HERO */
+.hero{
+  padding:170px 0 100px;
+  border-bottom:1px solid var(--rule);
+}
+.eyebrow{
+  color:var(--gold); font-family:'IBM Plex Mono'; font-size:13px;
+  letter-spacing:0.08em; text-transform:uppercase; margin-bottom:18px;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:''; width:24px; height:1px; background:var(--gold);}
+.hero h1{
+  font-size:clamp(32px, 5.2vw, 56px); font-weight:600; line-height:1.12;
+  max-width:780px; margin-bottom:24px;
+}
+.hero h1 span{color:var(--gold);}
+.hero p.lede{
+  color:var(--muted); font-size:18px; max-width:600px; margin-bottom:44px;
+}
+.cta-row{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:80px;}
+.btn{
+  padding:13px 26px; border-radius:2px; font-size:14px; font-weight:500;
+  text-decoration:none; transition:all .2s; display:inline-block;
+}
+.btn-primary{background:var(--gold); color:#14171C;}
+.btn-primary:hover{background:#e8ba3d;}
+.btn-secondary{border:1px solid var(--rule); color:var(--text);}
+.btn-secondary:hover{border-color:var(--muted);}
+
+/* LAYER DIAGRAM */
+.layers{display:flex; flex-direction:column; gap:2px; max-width:640px;}
+.layer{
+  display:grid; grid-template-columns:90px 1fr; align-items:center;
+  background:var(--panel); border-left:3px solid var(--l-color);
+  padding:16px 20px; opacity:0; transform:translateX(-12px);
+  animation:slideIn .6s ease forwards;
+}
+.layer:nth-child(1){--l-color:var(--bronze); animation-delay:.1s;}
+.layer:nth-child(2){--l-color:var(--silver); animation-delay:.3s;}
+.layer:nth-child(3){--l-color:var(--gold); animation-delay:.5s;}
+@keyframes slideIn{to{opacity:1; transform:translateX(0);}}
+.layer-label{font-family:'IBM Plex Mono'; font-size:12px; color:var(--l-color); text-transform:uppercase;}
+.layer-desc{font-size:14px; color:var(--muted);}
+
+/* SECTION */
+section{padding:90px 0; border-bottom:1px solid var(--rule);}
+.section-head{margin-bottom:52px;}
+.section-num{font-family:'IBM Plex Mono'; color:var(--muted); font-size:13px; margin-bottom:10px;}
+.section-head h2{font-size:clamp(24px,3vw,34px); font-weight:600;}
+
+/* ABOUT */
+.about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:60px;}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr;}}
+.about-grid p{color:var(--muted); margin-bottom:16px; font-size:15px;}
+.skills-list{display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start;}
+.skill-chip{
+  font-family:'IBM Plex Mono'; font-size:12px; padding:7px 12px;
+  background:var(--panel); border:1px solid var(--rule); color:var(--text);
+}
+
+/* CASE STUDIES */
+.case{
+  background:var(--panel); border:1px solid var(--rule);
+  margin-bottom:24px; padding:36px; opacity:0; transform:translateY(16px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.case.visible{opacity:1; transform:translateY(0);}
+.case-top{display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:24px; flex-wrap:wrap;}
+.case-client{font-family:'IBM Plex Mono'; font-size:12px; color:var(--muted); text-transform:uppercase;}
+.case-title{font-size:20px; font-weight:600; margin-top:6px;}
+.case-tools{display:flex; gap:6px; flex-wrap:wrap;}
+.case-tools span{font-family:'IBM Plex Mono'; font-size:11px; color:var(--muted); border:1px solid var(--rule); padding:4px 9px;}
+.case-body{display:grid; grid-template-columns:1fr; gap:0;}
+.case-row{
+  display:grid; grid-template-columns:120px 1fr; gap:20px; padding:16px 0;
+  border-top:1px solid var(--rule);
+}
+@media(max-width:640px){.case-row{grid-template-columns:1fr; gap:6px;}}
+.case-row-label{font-family:'IBM Plex Mono'; font-size:12px; text-transform:uppercase; padding-top:2px; display:flex; align-items:center; gap:6px; position:relative;}
+.case-row:nth-of-type(1) .case-row-label{color:var(--bronze);}
+.case-row:nth-of-type(2) .case-row-label{color:var(--silver);}
+.case-row:nth-of-type(3) .case-row-label{color:var(--gold);}
+.case-row p{font-size:14.5px; color:var(--text);}
+
+/* ARCH POPUP */
+.arch-info-icon{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  width:16px; height:16px; border-radius:50%; border:1px solid var(--rule);
+  font-family:'IBM Plex Mono'; font-size:10px; color:var(--muted); cursor:help;
+  text-transform:none; flex-shrink:0;
+}
+.arch-info-icon:hover{color:var(--text); border-color:var(--muted);}
+.arch-popup{
+  position:absolute; left:0; top:26px; z-index:20;
+  width:420px; max-width:min(70vw, 420px); padding:8px;
+  background:var(--panel-2); border:1px solid var(--rule); border-radius:2px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.5);
+  opacity:0; visibility:hidden; transform:translateY(-6px);
+  transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  pointer-events:none;
+}
+.arch-info-icon:hover .arch-popup{opacity:1; visibility:visible; transform:translateY(0);}
+.arch-popup img{width:100%; height:auto; border-radius:2px; display:block;}
+@media(max-width:640px){.arch-popup{width:70vw;}}
+
+/* PAINEIS */
+.panel-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;
+}
+.panel-card{
+  background:var(--panel); border:1px solid var(--rule); overflow:hidden;
+}
+.panel-thumb{
+  aspect-ratio:16/10; background:var(--panel-2);
+  display:flex; align-items:center; justify-content:center;
+  border-bottom:1px solid var(--rule);
+}
+.panel-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+.panel-thumb-label{
+  font-family:'IBM Plex Mono'; font-size:12px; color:var(--muted);
+  text-align:center; padding:0 20px;
+}
+.panel-info{padding:20px;}
+
+/* CONTACT */
+.contact{border-bottom:none;}
+.contact-box{
+  background:var(--panel); border:1px solid var(--rule); padding:48px;
+  text-align:center;
+}
+.contact-box h2{font-size:28px; margin-bottom:14px;}
+.contact-box p{color:var(--muted); margin-bottom:30px;}
+.contact-links{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">Portfólio | Felipe Lopes</div>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#paineis">Painéis</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Analytics Engineer</div>
+    <h1>Eu transformo dado <span>bruto</span> em decisão de negócio — do pipeline ao dashboard.</h1>
+    <p class="lede">Construo e otimizo pipelines de dados, automatizo controle de qualidade e traduzo lógica técnica em métricas que fazem sentido para quem decide. Freelancer para empresas que precisam de dado confiável, rápido.</p>
+    <div class="cta-row">
+      <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+      <a href="#contato" class="btn btn-secondary">Falar comigo</a>
+    </div>
+
+    <div class="layers">
+      <div class="layer">
+        <div class="layer-label">Bronze</div>
+        <div class="layer-desc">Dado bruto, inconsistente, sem regra de negócio aplicada</div>
+      </div>
+      <div class="layer">
+        <div class="layer-label">Prata</div>
+        <div class="layer-desc">Validação, limpeza, deduplicação e padronização</div>
+      </div>
+      <div class="layer">
+        <div class="layer-label">Ouro</div>
+        <div class="layer-desc">Métrica confiável, pronta para dashboard e decisão</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="sobre">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">01 — Sobre</div>
+      <h2>De projetos com clientes reais para o seu problema</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>Trabalho na ponte entre engenharia de dados e o negócio: construo consultas e pipelines em arquitetura medallion (bronze/silver/gold), desenho frameworks de qualidade de dados e traduzo regras de negócio complexas em modelos e dashboards que o time comercial e operacional realmente entende e confia.</p>
+        <p>Os cases abaixo são baseados em projetos reais conduzidos para clientes de diferentes setores — enriquecimento de dados, bens de consumo e distribuição — com nomes e detalhes de identificação removidos por confidencialidade.</p>
+        <p>
+            <!-- [Espaço para você adicionar: anos de experiência, formação, o que te diferencia, foto de perfil.] -->
+             MBA em Engenharia de Software, com 5 anos de experiência atuando em análise de dados e automações e trabalhei com entregas de projetos para empresas em diversos setores (saúde, varejo, financeiro e educação) sempre prezando pela qualidade e organização.
+        </p>
+      </div>
+      <div>
+        <div class="skills-list">
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">Power BI / DAX</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">Arquitetura Medallion</span>
+          <span class="skill-chip">ETL / ELT</span>
+          <span class="skill-chip">Qualidade de Dados</span>
+          <span class="skill-chip">Modelagem Dimensional</span>
+          <span class="skill-chip">Automação de Tarefas</span>
+          <span class="skill-chip">Documentação de Regras de Negócio</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">02 — Projetos</div>
+      <h2>Cases: do problema à métrica confiável</h2>
+    </div>
+
+    <!-- PREENCHER: substitua os textos abaixo pelos seus próprios projetos.
+         Estrutura sugerida por case: Bronze = o problema / contexto,
+         Prata = o que você fez tecnicamente, Ouro = o resultado/impacto.
+         Duplique o bloco .case para adicionar mais projetos. -->
+
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <div class="case-client">Saúde Pasa | Saúde Suplementar (Healthcare)</div>
+          <div class="case-title">Automatizando o Monitoramento de Sinistralidade e Custo na Saúde Suplementar</div>
+        </div>
+        <div class="case-tools"><span>Python</span><span>ETL</span><span>Terraform</span><span>BigQuery (GCP Cloud)</span><span>Cloud Run (GCP Cloud)</span><span>Power BI</span></div>
+      </div>
+      <div class="case-body">
+        <div class="case-row"><div class="case-row-label">Identificação do Problema</div><p>
+            <!-- [Qual era o problema ou contexto antes do seu trabalho começar?] -->
+            Dados pulverizados sobre vidas, despesas e receitas de operadoras, tanto pré-pagamento quanto pós-pagamento, sem acompanhamento e sem segmentações
+        </p></div>
+        <div class="case-row">
+          <div class="case-row-label">
+            Como foi Construído a Solução
+            <span class="arch-info-icon">i
+              <div class="arch-popup">
+                <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data-portfolio@main/assets/images/arquitetura_pipeline_healthcare.png" alt="Diagrama de arquitetura: GitHub Actions e Artifact Registry fazem build/deploy da imagem Docker; Cloud Scheduler invoca via OIDC um Cloud Run Job mensal que carrega dados particionados no BigQuery; Power BI consome via consulta/import para o resumo executivo">
+              </div>
+            </span>
+          </div>
+          <p>
+             Construção de um pipeline com extração automatizada, tratamento dos dados, armazenamento em um data warehouse e visualização com análises sólidas, tudo orquestrado via tarefa agendada utilizando uma função serveless em uma cloud
+        </p></div>
+        <div class="case-row"><div class="case-row-label">Resultado para o Cliente</div><p>
+            <!-- [Qual foi o resultado mensurável ou o impacto para o cliente?] -->
+             Agregação de informações em um só visual e apontamentos de situações críticas por segmentações (por plano, por uf, por empresas e por tipo de risco) facilitando a tomada de decisões
+        </p></div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <div class="case-client">Varejo | Inteligência de Mercado (Retail)</div>
+          <div class="case-title">MarketIntelligence-AI: Plataforma Integrada de Inteligência de Mercado & Self-Service para Varejo</div>
+        </div>
+        <div class="case-tools"><span>Python</span><span>SQL</span><span>dbt</span><span>Airflow</span><span>Deltalake</span><span>DuckDB</span><span>LLM / IA Generativa</span><span>Metabase</span></div>
+      </div>
+      <div class="case-body">
+        <div class="case-row"><div class="case-row-label">Identificação do Problema</div><p>
+             Times de trade marketing e pricing dependiam de relatórios manuais e planilhas dispersas para acompanhar concorrência, preço e sortimento, sem uma fonte única de verdade — gerando alto tempo de resposta e decisões baseadas em dados desatualizados
+        </p></div>
+        <div class="case-row"><div class="case-row-label">Como foi Construído a Solução</div><p>
+             Construção de uma plataforma com ingestão automatizada de múltiplas fontes de dados de mercado, modelagem em arquitetura medallion (bronze/silver/gold) orquestrada via Airflow, e uma camada de self-service combinando dashboards em Metabase com uma interface de IA generativa para consultas em linguagem natural sobre os dados de mercado
+        </p></div>
+        <div class="case-row"><div class="case-row-label">Resultado para o Cliente</div><p>
+             Redução do tempo de geração de análises de mercado de dias para minutos, com autonomia para times de negócio explorarem os dados sem depender de um analista, acelerando decisões de precificação e sortimento
+        </p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="paineis">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">02.1 — Painéis</div>
+      <h2>Painéis já entregues</h2>
+    </div>
+
+    <!-- PREENCHER: envie os screenshots dos seus 1-2 melhores painéis e eu
+         substituo os placeholders abaixo pelas imagens reais + legendas. -->
+
+    <div class="panel-grid">
+        <div class="panel-card">
+        <div class="panel-thumb">
+            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data-portfolio@main/assets/gifs/sinistralidade-dashboard.gif" 
+                alt="Demonstração do dashboard de sinistralidade e custos por operadora"
+                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
+        </div>
+        <div class="panel-info">
+            <div class="case-client">Power BI</div>
+            <div class="case-title" style="font-size:16px;">Sinistralidade e Custos por Operadora</div>
+            <p style="color:var(--muted); font-size:14px; margin-top:8px;">Consolida sinistralidade, custos e vidas de operadoras distintas em um único painel, com segmentações por UF, plano e tipo de risco — atualização automática via pipeline agendado.</p>
+        </div>
+        </div>
+
+      <div class="panel-card">
+        <div class="panel-thumb">
+            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data-portfolio@main/assets/gifs/risco-dashboard.gif" 
+                alt="Demonstração do dashboard de custo por tipo de risco"
+                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
+        </div>
+        <div class="panel-info">
+          <div class="case-client">Power BI</div>
+          <div class="case-title" style="font-size:16px;">Custo Per Capita por Tipo de Risco</div>
+          <p style="color:var(--muted); font-size:14px; margin-top:8px;">Segmenta o custo per capita por tipo de risco com filtro lateral por data, operadoras, ufs, cidades, empresas, utilização de reciprocidade e inclusão de coparticipação</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">03 — Como trabalho</div>
+      <h2>Do dado bruto à decisão, sem ruído no meio</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p><strong style="color:var(--bronze)">Bronze — Diagnóstico:</strong> entendo a origem do dado, onde ele quebra e qual regra de negócio ele precisa respeitar antes de qualquer código.</p>
+        <p><strong style="color:var(--silver)">Prata — Construção:</strong> pipelines, validações e modelos são construídos com testes e documentação, não como caixa-preta.</p>
+        <p><strong style="color:var(--gold)">Ouro — Entrega:</strong> o resultado final é uma métrica ou dashboard que o time de negócio entende e em que confia — com a lógica por trás documentada.</p>
+      </div>
+      <div>
+        <a href="https://github.com/felipe-mlopes/pipeline_healthcare_executive_dashboard" class="btn btn-secondary">Repositório Pipeline Dashboard Executivo Healthcare</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Vamos conversar sobre o seu dado?</h2>
+      <p>Disponível para projetos freelance de pipelines, qualidade de dados e dashboards.</p>
+      <div class="contact-links">
+        <a href="mailto:felipe.mlopes03@gmail.com" class="btn btn-primary">felipe.mlopes03@gmail.com</a>
+        <a href="https://www.linkedin.com/in/felipe-mlopes" class="btn btn-secondary">LinkedIn</a>
+        <a href="https://github.com/felipe-mlopes" class="btn btn-secondary">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 | Felipe Lopes. Portfólio de Analytics Engineering.</footer>
+
+<script>
+const cases = document.querySelectorAll('.case');
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, {threshold:0.15});
+cases.forEach(c=>obs.observe(c));
+</script>
+
+</body>
+</html>
