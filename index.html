@@ -374,6 +374,27 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
       </div>
     </div>
 
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <div class="case-client">Saúde Pasa | Saúde Suplementar (Healthcare)</div>
+          <div class="case-title">Radar Regulação - Mapeamento de Procedimentos Emergentes na Última Semana</div>
+        </div>
+        <div class="case-tools"><span>Python</span><span>SQL</span><span>APScheduler</span><span>SQLite</span><span>Streamlit + Plotly</span></div>
+      </div>
+      <div class="case-body">
+        <div class="case-row"><div class="case-row-label">Identificação do Problema</div><p>
+             Autorizações de pequeno risco (ambulatoriais) não reguladas devido ao volume de procedimentos, sem acompanhamento e sem segmentações, gerando possível risco de sinistralidade e prejuízo financeiro
+        </p></div>
+        <div class="case-row"><div class="case-row-label">Como foi Construído a Solução</div><p>
+             Consumo de dados via DataLake (AWS), tratamento e armazenamento em SQLite, com visualização em dashboard interativo via Streamlit + Plotly, e agendamento de execução semanal via APScheduler
+        </p></div>
+        <div class="case-row"><div class="case-row-label">Resultado para o Cliente</div><p>
+              Dashboard interativo com segmentações por prestador, uf, plano e tipo de tratamento, permitindo acompanhamento semanal de procedimentos emergentes e identificação de possíveis riscos de sinistralidade
+        </p></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -381,7 +402,7 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
   <div class="wrap">
     <div class="section-head">
       <div class="section-num">02.1 — Painéis</div>
-      <h2>Painéis já entregues</h2>
+      <h2>Principais Painéis Entregues</h2>
     </div>
 
     <!-- PREENCHER: envie os screenshots dos seus 1-2 melhores painéis e eu
@@ -411,6 +432,20 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
           <div class="case-client">Power BI</div>
           <div class="case-title" style="font-size:16px;">Custo Per Capita por Tipo de Risco</div>
           <p style="color:var(--muted); font-size:14px; margin-top:8px;">Segmenta o custo per capita por tipo de risco com filtro lateral por data, operadoras, ufs, cidades, empresas, utilização de reciprocidade e inclusão de coparticipação</p>
+        </div>
+      </div>
+    </div>
+
+      <div class="panel-card">
+        <div class="panel-thumb">
+            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/desvio-semanal-autorizacoes-dashboard.gif" 
+                alt="Demonstração do dashboard de radar de procedimentos ambulatoriais emergentes"
+                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
+        </div>
+        <div class="panel-info">
+          <div class="case-client">Power BI</div>
+          <div class="case-title" style="font-size:16px;">radar de procedimentos ambulatoriais emergentes</div>
+          <p style="color:var(--muted); font-size:14px; margin-top:8px;">Segmenta o range de semanas observadas, volume mínimo recente e máximo nº de autorizações no histórico, além de ter drill-down por uf e por prestador </p>
         </div>
       </div>
     </div>
