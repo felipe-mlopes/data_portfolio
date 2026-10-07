@@ -195,8 +195,22 @@ section{padding:90px 0; border-bottom:1px solid var(--rule);}
 @media(max-width:640px){.arch-popup{width:92vw;}}
 
 /* PAINEIS */
-.panel-grid{
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;
+.carousel{position:relative;}
+.carousel-track{
+  display:flex; gap:24px; list-style:none;
+  overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none; padding-bottom:4px;
+}
+.carousel-track::-webkit-scrollbar{display:none;}
+.carousel-track:focus-visible{outline:2px solid var(--gold); outline-offset:4px;}
+.carousel-track > .panel-card{
+  flex:0 0 calc((100% - 24px) / 2);   /* desktop: 2 por vez */
+  scroll-snap-align:start;
+}
+@media(max-width:768px){
+  .carousel-track{gap:16px;}
+  .carousel-track > .panel-card{flex-basis:85%;}  /* mobile: 1 + "espiada" do próximo */
 }
 .panel-card{
   background:var(--panel); border:1px solid var(--rule); overflow:hidden;
@@ -212,6 +226,32 @@ section{padding:90px 0; border-bottom:1px solid var(--rule);}
   text-align:center; padding:0 20px;
 }
 .panel-info{padding:20px;}
+.panel-info .case-title{font-size:16px;}
+.panel-info p{color:var(--muted); font-size:14px; margin-top:8px;}
+
+.carousel-controls{
+  display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:24px;
+}
+.carousel-dots{display:flex; gap:8px;}
+.carousel-dot{
+  width:24px; height:3px; border:none; padding:0; cursor:pointer;
+  background:var(--rule); transition:background .2s, width .2s;
+}
+.carousel-dot[aria-current="true"]{background:var(--gold); width:40px;}
+.carousel-dot:focus-visible{outline:2px solid var(--gold); outline-offset:4px;}
+.carousel-arrows{display:flex; gap:8px;}
+.carousel-btn{
+  width:40px; height:40px; border-radius:2px; cursor:pointer;
+  background:var(--panel); border:1px solid var(--rule); color:var(--text);
+  font-size:18px; display:flex; align-items:center; justify-content:center;
+  transition:border-color .2s, opacity .2s;
+}
+.carousel-btn:hover:not(:disabled){border-color:var(--gold);}
+.carousel-btn:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+.carousel-btn:disabled{opacity:.35; cursor:default;}
+@media (prefers-reduced-motion: reduce){
+  .carousel-track{scroll-behavior:auto;}
+}
 
 /* CONTACT */
 .contact{border-bottom:none;}
@@ -241,7 +281,7 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
     <ul class="nav-links" id="navLinks">
       <li><a href="#sobre">Sobre</a></li>
       <li><a href="#projetos">Projetos</a></li>
-      <li><a href="#paineis">Painéis</a></li>
+      <li><a href="#paineis">Dashboards</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
@@ -387,7 +427,7 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
              Autorizações de pequeno risco (ambulatoriais) não reguladas devido ao volume de procedimentos, sem acompanhamento e sem segmentações, gerando possível risco de sinistralidade e prejuízo financeiro
         </p></div>
         <div class="case-row"><div class="case-row-label">Como foi Construído a Solução</div><p>
-             Consumo de dados via DataLake (AWS), tratamento e armazenamento em SQLite, com visualização em dashboard interativo via Streamlit + Plotly, e agendamento de execução semanal via APScheduler
+             Consumo de dados via LakeHouse (AWS), tratamento e armazenamento em SQLite, com visualização em dashboard interativo via Streamlit + Plotly, e agendamento de execução semanal via APScheduler
         </p></div>
         <div class="case-row"><div class="case-row-label">Resultado para o Cliente</div><p>
               Dashboard interativo com segmentações por prestador, uf, plano e tipo de tratamento, permitindo acompanhamento semanal de procedimentos emergentes e identificação de possíveis riscos de sinistralidade
@@ -401,51 +441,56 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
 <section id="paineis">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-num">02.1 — Painéis</div>
-      <h2>Principais Painéis Entregues</h2>
+      <div class="section-num">03 — Dashboards</div>
+      <h2>Principais Dashboards Entregues</h2>
     </div>
 
-    <!-- PREENCHER: envie os screenshots dos seus 1-2 melhores painéis e eu
-         substituo os placeholders abaixo pelas imagens reais + legendas. -->
+    <div class="carousel" aria-roledescription="carrossel" aria-label="Painéis entregues">
+      <ul class="carousel-track" id="panelTrack" tabindex="0">
 
-    <div class="panel-grid">
-        <div class="panel-card">
-        <div class="panel-thumb">
-            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/sinistralidade-dashboard.gif" 
-                alt="Demonstração do dashboard de sinistralidade e custos por operadora"
-                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
-        </div>
-        <div class="panel-info">
+        <li class="panel-card" role="group" aria-roledescription="slide" aria-label="1 de 3">
+          <div class="panel-thumb">
+            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/sinistralidade-dashboard.gif"
+                 alt="Demonstração do dashboard de sinistralidade e custos por operadora" loading="lazy">
+          </div>
+          <div class="panel-info">
             <div class="case-client">Power BI</div>
-            <div class="case-title" style="font-size:16px;">Sinistralidade e Custos por Operadora</div>
-            <p style="color:var(--muted); font-size:14px; margin-top:8px;">Consolida sinistralidade, custos e vidas de operadoras distintas em um único painel, com segmentações por UF, plano e tipo de risco — atualização automática via pipeline agendado.</p>
-        </div>
-        </div>
+            <div class="case-title">Sinistralidade e Custos por Operadora</div>
+            <p>Consolida sinistralidade, custos e vidas de operadoras distintas em um único painel, com segmentações por UF, plano e tipo de risco — atualização automática via pipeline agendado.</p>
+          </div>
+        </li>
 
-      <div class="panel-card">
-        <div class="panel-thumb">
-            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/risco-dashboard.gif" 
-                alt="Demonstração do dashboard de custo por tipo de risco"
-                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
-        </div>
-        <div class="panel-info">
-          <div class="case-client">Power BI</div>
-          <div class="case-title" style="font-size:16px;">Custo Per Capita por Tipo de Risco</div>
-          <p style="color:var(--muted); font-size:14px; margin-top:8px;">Segmenta o custo per capita por tipo de risco com filtro lateral por data, operadoras, ufs, cidades, empresas, utilização de reciprocidade e inclusão de coparticipação</p>
-        </div>
-      </div>
-    </div>
+        <li class="panel-card" role="group" aria-roledescription="slide" aria-label="2 de 3">
+          <div class="panel-thumb">
+            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/risco-dashboard.gif"
+                 alt="Demonstração do dashboard de custo por tipo de risco" loading="lazy">
+          </div>
+          <div class="panel-info">
+            <div class="case-client">Power BI</div>
+            <div class="case-title">Custo Per Capita por Tipo de Risco</div>
+            <p>Segmenta o custo per capita por tipo de risco com filtro lateral por data, operadoras, UFs, cidades, empresas, utilização de reciprocidade e inclusão de coparticipação.</p>
+          </div>
+        </li>
 
-      <div class="panel-card">
-        <div class="panel-thumb">
-            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/desvio-semanal-autorizacoes-dashboard.gif" 
-                alt="Demonstração do dashboard de radar de procedimentos ambulatoriais emergentes"
-                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
-        </div>
-        <div class="panel-info">
-          <div class="case-client">Power BI</div>
-          <div class="case-title" style="font-size:16px;">radar de procedimentos ambulatoriais emergentes</div>
-          <p style="color:var(--muted); font-size:14px; margin-top:8px;">Segmenta o range de semanas observadas, volume mínimo recente e máximo nº de autorizações no histórico, além de ter drill-down por uf e por prestador </p>
+        <li class="panel-card" role="group" aria-roledescription="slide" aria-label="3 de 3">
+          <div class="panel-thumb">
+            <img src="https://cdn.jsdelivr.net/gh/felipe-mlopes/data_portfolio@master/assets/gifs/desvio-semanal-autorizacoes-dashboard_v2.gif"
+                 alt="Demonstração do dashboard de radar de procedimentos ambulatoriais emergentes" loading="lazy">
+          </div>
+          <div class="panel-info">
+            <div class="case-client">Streamlit + Plotly</div>
+            <div class="case-title">Radar de Procedimentos Ambulatoriais Emergentes</div>
+            <p>Segmenta o range de semanas observadas, volume mínimo recente e máximo nº de autorizações no histórico, além de ter drill-down por UF e por prestador.</p>
+          </div>
+        </li>
+
+      </ul>
+
+      <div class="carousel-controls">
+        <div class="carousel-dots" id="panelDots" role="group" aria-label="Escolher painel"></div>
+        <div class="carousel-arrows">
+          <button class="carousel-btn" id="panelPrev" aria-label="Painel anterior">‹</button>
+          <button class="carousel-btn" id="panelNext" aria-label="Próximo painel">›</button>
         </div>
       </div>
     </div>
@@ -456,7 +501,7 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
 <section id="skills">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-num">03 — Como trabalho</div>
+      <div class="section-num">04 — Como trabalho</div>
       <h2>Do dado bruto à decisão, sem ruído no meio</h2>
     </div>
     <div class="about-grid">
@@ -467,6 +512,8 @@ footer{padding:32px 0; text-align:center; color:var(--muted); font-size:13px;}
       </div>
       <div>
         <a href="https://github.com/felipe-mlopes/pipeline_healthcare_executive_dashboard" class="btn btn-secondary">Repositório Pipeline Dashboard Executivo Healthcare</a>
+        <a href="https://github.com/felipe-mlopes/pipeline_ai_driven_market_intelligence_retail" class="btn btn-secondary">Repositório Pipeline Market Intelligence AI-Driven</a>
+        <a href="https://github.com/felipe-mlopes/pipeline_auth_healthcare_weekly_volume_variance_detector" class="btn btn-secondary">Repositório Pipeline Radar de Procedimentos Emergentes</a>
       </div>
     </div>
   </div>
@@ -509,6 +556,59 @@ navLinks.querySelectorAll('a').forEach(a=>{
     navToggle.textContent = '☰';
   });
 });
+
+// Carrossel de painéis
+(function(){
+  const track = document.getElementById('panelTrack');
+  if(!track) return;
+  const slides = Array.from(track.children);
+  const prev = document.getElementById('panelPrev');
+  const next = document.getElementById('panelNext');
+  const dotsWrap = document.getElementById('panelDots');
+
+  const dots = slides.map((_, i)=>{
+    const d = document.createElement('button');
+    d.className = 'carousel-dot';
+    d.setAttribute('aria-label', `Ir para o painel ${i+1}`);
+    d.addEventListener('click', ()=>goTo(i));
+    dotsWrap.appendChild(d);
+    return d;
+  });
+
+  const step = ()=> slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
+  const maxScroll = ()=> track.scrollWidth - track.clientWidth;
+  const current = ()=> Math.round(track.scrollLeft / step());
+
+  function goTo(i){
+    track.scrollTo({left: Math.min(i * step(), maxScroll())});
+  }
+
+  function update(){
+    const atEnd = track.scrollLeft >= maxScroll() - 2;
+    const visible = Math.max(1, Math.round(track.clientWidth / step()));
+    const idx = atEnd ? slides.length - visible : current();
+    dots.forEach((d, i)=> d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = atEnd;
+    // esconde bolinhas que não levam a uma posição nova (ex.: 2 cards visíveis no desktop)
+    dots.forEach((d, i)=> d.hidden = i > slides.length - visible);
+    if(visible >= slides.length) dotsWrap.parentElement.style.display = 'none';
+    else dotsWrap.parentElement.style.display = '';
+  }
+
+  prev.addEventListener('click', ()=> goTo(current() - 1));
+  next.addEventListener('click', ()=> goTo(current() + 1));
+  track.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowRight'){ e.preventDefault(); goTo(current() + 1); }
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); goTo(current() - 1); }
+  });
+
+  let raf;
+  track.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+
 </script>
 
 </body>
